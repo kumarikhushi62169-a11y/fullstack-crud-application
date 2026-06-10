@@ -349,7 +349,7 @@ const handleReset = (e) => {
 
   {/* Joining Date */}
   <div>
-    <label className="block mb-2 text-sm font-semibold text-gray-700">
+    <label className="block mb-2 m-3 ml-0 text-sm font-semibold text-gray-700">
       Joining Date
     </label>
 

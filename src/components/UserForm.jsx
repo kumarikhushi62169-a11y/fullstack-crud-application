@@ -5,7 +5,7 @@
     Phone,
     UserCog,
     Calendar,
-    Activity,
+    Activity, 
     UserPlus,
     RotateCcw,
   } from "lucide-react";
@@ -26,18 +26,32 @@
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
-      if (editingUser) {
-        setName(editingUser.name);
-        setEmail(editingUser.email);
-        setMobile(editingUser.mobile);
-        setAge(editingUser.age);
-        setRole(editingUser.role);
-        setStatus(editingUser.age);
-        setJoiningDate(editingUser.joiningDate);
-      }
-    }, [editingUser]);
+       console.log("editingUser:", editingUser);
+  if (editingUser) {
+    setName(editingUser.name || "");
+    setEmail(editingUser.email || "");
+    setMobile(editingUser.mobile || "");
+    setAge(editingUser.age || "");
+    setRole(editingUser.role || "");
+    setStatus(editingUser.status || "");
 
-  const handleSubmit = async (e) => {
+    setJoiningDate(
+      editingUser.joiningDate
+        ? editingUser.joiningDate.slice(0, 10)
+        : ""
+    );
+  } else {
+    setName("");
+    setEmail("");
+    setMobile("");
+    setAge("");
+    setRole("");
+    setStatus("");
+    setJoiningDate("");
+  }
+}, [editingUser]);
+
+ const handleSubmit = async (e) => {
   e.preventDefault();
 
   if (
@@ -74,21 +88,6 @@
     return;
   }
 
-if (/\d/.test(name)) {
-  Swal.fire({
-    icon: "error",
-    title: "Invalid Name",
-    text: "Name cannot contain numbers",
-    confirmButtonColor: "#2563eb",
-    confirmButtonText: "OK",
-    allowOutsideClick: false,
-    allowEscapeKey: false,
-  });
-
-  return;
-}
-
-
   const user = {
     id: editingUser ? editingUser.id : Date.now(),
     name,
@@ -100,25 +99,33 @@ if (/\d/.test(name)) {
     joiningDate,
   };
 
-  console.log(user);
+if (editingUser) {
+  const success = await updateUser(user);
 
-  if (editingUser) {
-    await updateUser(user);
-  } else {
-    const success = await addUser(user);
+  if (success !== false) {
+    setName("");
+    setEmail("");
+    setMobile("");
+    setAge("");
+    setRole("");
+    setStatus("");
+    setJoiningDate("");
+  }
+} else {
+  const success = await addUser(user);
 
-    if (success) {
-      setName("");
-      setEmail("");
-      setMobile("");
-      setAge("");
-      setRole("");
-      setStatus("");
-      setJoiningDate("");
-    }
+  if (success) {
+    setName("");
+    setEmail("");
+    setMobile("");
+    setAge("");
+    setRole("");
+    setStatus("");
+    setJoiningDate("");
+  }
+
   }
 };
-
 const handleReset = (e) => {
   e.preventDefault();
 

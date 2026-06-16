@@ -5,6 +5,7 @@ import {
   ShieldCheck,
   LogOut,
   X,
+  Eye,
   ChevronRight,
 } from "lucide-react";
 
@@ -209,6 +210,28 @@ className={`group flex items-center justify-between px-4 py-3 rounded-xl cursor-
             />
 
           </li>
+
+
+          <li
+  onClick={() => setPage("viewusers")}
+  className={`group flex items-center justify-between px-4 py-3 rounded-xl cursor-pointer transition duration-300 ${
+    page === "viewusers"
+      ? "bg-blue-500 text-white"
+      : "bg-white/10 hover:bg-blue-300"
+  }`}
+>
+  <div className="flex items-center gap-3">
+    <Eye size={16} />
+    <span className="text-xs font-bold">
+      View Users
+    </span>
+  </div>
+
+  <ChevronRight
+    size={14}
+    className="opacity-70 group-hover:translate-x-1 transition"
+  />
+</li>
 
   
           <div className="border-t border-white/20 my-4"></div>

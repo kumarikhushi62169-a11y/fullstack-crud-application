@@ -14,17 +14,22 @@ export default function AdminPanel({ users }) {
 
     <div className="bg-white p-8 rounded-2xl shadow-md">
 
-      <h1 className="text-3xl font-bold mb-8 text-gray-800">
-        Admin Panel
+      {/* HEADER UPDATED */}
+      <h1 className="text-3xl font-bold mb-2 text-gray-800">
+        User Management Admin Panel
       </h1>
+      <p className="text-gray-500 mb-8">
+        Overview of registered users and system status
+      </p>
 
       <div className="grid md:grid-cols-2 gap-6">
 
-        
-        <div className="bg-blue-600 text-white p-6 rounded-2xl">
+        {/* Registered Users */}
+        <div className="bg-blue-600 text-white p-6 rounded-2xl shadow-md 
+                        hover:-translate-y-1 hover:shadow-xl transition duration-300 cursor-pointer">
 
           <h2 className="text-xl font-semibold mb-3">
-            Total Users
+            Registered Users
           </h2>
 
           <p className="text-5xl font-bold">
@@ -33,8 +38,9 @@ export default function AdminPanel({ users }) {
 
         </div>
 
-        
-        <div className="bg-green-600 text-white p-6 rounded-2xl">
+        {/* Latest User */}
+        <div className="bg-green-600 text-white p-6 rounded-2xl shadow-md 
+                        hover:-translate-y-1 hover:shadow-xl transition duration-300 cursor-pointer">
 
           <h2 className="text-xl font-semibold mb-3">
             Latest User
@@ -46,11 +52,12 @@ export default function AdminPanel({ users }) {
 
         </div>
 
-        
-        <div className="bg-yellow-500 text-white p-6 rounded-2xl">
+        {/* Old User */}
+        <div className="bg-yellow-500 text-white p-6 rounded-2xl shadow-md 
+                        hover:-translate-y-1 hover:shadow-xl transition duration-300 cursor-pointer">
 
           <h2 className="text-xl font-semibold mb-3">
-            Old User
+            First User
           </h2>
 
           <p className="text-3xl font-bold">
@@ -59,8 +66,9 @@ export default function AdminPanel({ users }) {
 
         </div>
 
-        
-        <div className="bg-red-500 text-white p-6 rounded-2xl">
+        {/* System Status */}
+        <div className="bg-red-500 text-white p-6 rounded-2xl shadow-md 
+                        hover:-translate-y-1 hover:shadow-xl transition duration-300 cursor-pointer">
 
           <h2 className="text-xl font-semibold mb-3">
             System Status

@@ -1,12 +1,12 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
-
+import ViewUsers from "./components/ViewsUsers";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import UserForm from "./components/UserForm";
 import UserList from "./components/UserList";
-import ViewModal from "./components/ViewModal";
+import Users from "./components/Users";
 import AdminPanel from "./components/AdminPanel";
 import Login from "./components/Login";
 
@@ -163,7 +163,7 @@ try {
 
   }
 
-  
+
   const deleteUser = async (id) => {
 
     const result = await Swal.fire({
@@ -208,38 +208,57 @@ try {
   const viewUser = (user) =>
     setSelectedUser(user);
 
-  const updateUser = async (updatedUser) => {
 
-    const res = await axios.put(
-      `${API}/${updatedUser.id}`,
-      updatedUser
+const updateUser = async (updatedUser) => {
+  try {
+    const res = await fetch(
+      `http://localhost:3000/users/${updatedUser.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedUser),
+      }
     );
-console.log("POST RESPONSE:", res.data);
-console.log("API Data:", res.data);
 
-    setUsers(
-      users.map((u) =>
-        u.id === updatedUser.id
-          ? res.data
-          : u
+    if (!res.ok) {
+      throw new Error("Update failed");
+    }
+
+    const data = await res.json();
+
+    setUsers((prev) =>
+      prev.map((user) =>
+        user.id === updatedUser.id ? data : user
       )
     );
 
     setEditingUser(null);
 
-    await Swal.fire({
+    Swal.fire({
       icon: "success",
-      title: "Updated",
-      confirmButtonText: "OK",
-
+      title: "User Updated Successfully",
+      confirmButtonColor: "#2563eb",
       allowOutsideClick: false,
       allowEscapeKey: false,
-      allowEnterKey: false,
     });
 
-  };
+    return true;
+  } catch (error) {
+    console.error(error);
 
-  
+    Swal.fire({
+      icon: "error",
+      title: "Update Failed",
+      text: error.message,
+      confirmButtonColor: "#2563eb",
+    });
+
+    return false;
+  }
+};
+
   if (!isLoggedIn) {
     return (
       <Login
@@ -302,7 +321,7 @@ console.log("API Data:", res.data);
                     search={search}
                     deleteUser={deleteUser}
                     editUser={editUser}
-                    viewUser={viewUser}
+                    
                   />
 
                 </div>
@@ -312,27 +331,16 @@ console.log("API Data:", res.data);
           }
 
     
-          {
-            page === "users" && (
+          
+          
+{
+  page === "users" && (
+    <Users users={users} />
+  )
+}
 
-              <div className="bg-white p-10 rounded-2xl shadow-md">
 
-                <h1 className="text-3xl font-bold mb-8 text-gray-800">
-                  Total Users
-                </h1>
-
-                <div className="bg-blue-600 text-white p-10 rounded-2xl w-72">
-
-                  <p className="text-5xl font-bold">
-                    {users.length}
-                  </p>
-
-                </div>
-
-              </div>
-
-            )
-          }
+          
 
     
           {
@@ -341,17 +349,16 @@ console.log("API Data:", res.data);
             )
           }
 
+
+          {
+  page === "viewusers" && (
+    <ViewUsers users={users} />
+  )
+}
+
         </div>
 
-      </div>
-
-      
-      <ViewModal
-        user={selectedUser}
-        closeModal={() =>
-          setSelectedUser(null)
-        }
-      />
+      </div>      
 
     </div>
 

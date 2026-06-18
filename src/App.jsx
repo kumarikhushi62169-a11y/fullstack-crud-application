@@ -14,7 +14,7 @@ export default function App() {
 
 
 
-  const API = "http://localhost:3000/users";
+  const API = "http://localhost:3000/users";  
 
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -137,6 +137,7 @@ try {
 
   setUsers([...users, res.data]);
 
+
   await Swal.fire({
     icon: "success",
     title: "User Added",
@@ -145,6 +146,15 @@ try {
   allowEscapeKey: false,
   allowEnterKey: false,
   });
+
+  setTimeout(() => {
+  document
+    .getElementById(`user-${res.data.id}`)
+    ?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+}, 100);
   return true;
 
 } catch (err) {
@@ -199,14 +209,21 @@ try {
     });
 
   };
-
+  
+  const viewUser = (user) =>
+    setSelectedUser(user);
 
   const editUser = (user) =>
     setEditingUser(user);
 
-  
-  const viewUser = (user) =>
-    setSelectedUser(user);
+  setTimeout(() => {
+    document
+      .getElementById("user-form")
+      ?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+  }, 100);
 
 
 const updateUser = async (updatedUser) => {
@@ -234,17 +251,26 @@ const updateUser = async (updatedUser) => {
       )
     );
 
-    setEditingUser(null);
+   await Swal.fire({
+  icon: "success",
+  title: "User Updated Successfully",
+  confirmButtonColor: "#2563eb",
+  allowOutsideClick: false,
+  allowEscapeKey: false,
+});
 
-    Swal.fire({
-      icon: "success",
-      title: "User Updated Successfully",
-      confirmButtonColor: "#2563eb",
-      allowOutsideClick: false,
-      allowEscapeKey: false,
+setEditingUser(null);
+
+setTimeout(() => {
+  document
+    .getElementById(`user-${updatedUser.id}`)
+    ?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
     });
+}, 200);
 
-    return true;
+return true;
   } catch (error) {
     console.error(error);
 
@@ -303,12 +329,16 @@ const updateUser = async (updatedUser) => {
             page === "dashboard" && (
               <>
 
-                <div className="bg-white p-6 rounded-2xl shadow-md">
+                <div 
+                 id="user-form"
+                
+                className="bg-white p-6 rounded-2xl shadow-md">
 
                   <UserForm
                     addUser={addUser}
                     editingUser={editingUser}
                     updateUser={updateUser}
+                     
                   />
 
                 </div>

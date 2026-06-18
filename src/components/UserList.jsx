@@ -1,12 +1,24 @@
     import { Pencil, Trash2 } from "lucide-react";
+    
+
+
 
     export default function UserList({
+
+      
       users,
       search,
       deleteUser,
       editUser,
+        lastAddedId,
+    }) 
+     
+    {
+
+
+
+
       
-    }) {
       const filteredUsers = users.filter((user) =>
         user.name.toLowerCase().includes(search.toLowerCase())
       );
@@ -63,6 +75,7 @@
                 {filteredUsers.length > 0 ? (
                   filteredUsers.map((user) => (
                     <tr
+                       id={`user-${user.id}`}
                       key={user.id}
                       className={`border-t border-gray-300 transition duration-300 ${
                         search &&

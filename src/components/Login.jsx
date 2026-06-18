@@ -3,12 +3,14 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Eye, EyeOff } from "lucide-react";
 
+
 export default function Login({ setIsLoggedIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
+    
     // Empty Form Validation
     if (!email.trim() || !password.trim()) {
       await Swal.fire({
@@ -60,6 +62,57 @@ export default function Login({ setIsLoggedIn }) {
     }
   };
 
+  
+
+
+
+//  const handleLogin = async () => {
+//   console.log("Login Button Clicked");
+
+//   if (!email.trim() || !password.trim()) {
+//     await Swal.fire({
+//       icon: "warning",
+//       title: "Form Empty",
+//       text: "Please fill Email and Password",
+//     });
+//     return;
+//   }
+
+//   try {
+//     console.log("Sending Request...");
+
+//     const res = await axios.post(
+//       "http://localhost:3000/auth/login",
+//       {
+//         email,
+//         password,
+//       }
+//     );
+
+//     console.log("LOGIN RESPONSE =", res.data);
+
+//     localStorage.setItem("token", res.data.token);
+
+//     await Swal.fire({
+//       icon: "success",
+//       title: "Login Successful",
+//       text: "Welcome Admin",
+//     });
+
+//     setIsLoggedIn(true);
+
+//   } catch (err) {
+//     console.log("LOGIN ERROR =", err);
+
+//     await Swal.fire({
+//       icon: "error",
+//       title: "Login Failed",
+//       text:
+//         err.response?.data?.message ||
+//         "Invalid Email or Password",
+//     });
+//   }
+// };
   return (
     <div className="min-h-screen flex items-center justify-center bg-indigo-500">
       <div className="bg-white w-full max-w-md p-8 rounded-2xl shadow-2xl">

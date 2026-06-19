@@ -1,5 +1,5 @@
     import { Pencil, Trash2 } from "lucide-react";
-    
+    import { useEffect } from "react";
 
 
 
@@ -10,7 +10,7 @@
       search,
       deleteUser,
       editUser,
-        lastAddedId,
+      lastAddedId,
     }) 
      
     {
@@ -22,6 +22,20 @@
       const filteredUsers = users.filter((user) =>
         user.name.toLowerCase().includes(search.toLowerCase())
       );
+
+useEffect(() => {
+  if (search && filteredUsers.length > 0) {
+    setTimeout(() => {
+      document
+        .getElementById(`user-${filteredUsers[0].id}`)
+        ?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+    }, 800);
+  }
+}, [search, filteredUsers]);
+
       console.log(users);
     console.log(typeof users);
     console.log(Array.isArray(users));

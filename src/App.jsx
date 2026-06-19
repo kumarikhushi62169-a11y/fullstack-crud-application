@@ -213,8 +213,8 @@ try {
   const viewUser = (user) =>
     setSelectedUser(user);
 
-  const editUser = (user) =>
-    setEditingUser(user);
+  const editUser = (user) => {
+  setEditingUser(user);
 
   setTimeout(() => {
     document
@@ -224,6 +224,7 @@ try {
         block: "start",
       });
   }, 100);
+};
 
 
 const updateUser = async (updatedUser) => {
